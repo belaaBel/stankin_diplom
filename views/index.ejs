@@ -11,39 +11,10 @@
     <form class = 'form' method="POST" action = "/">
         <div class = 'fon'>
             <label class = 'label'>Вход</label>
-            <!-- <div> -->
-                <input type = "text" name = "name" placeholder = "Логин" class = 'input' id = 'name' required>
-           <!-- </div>
-            <div>  -->
-                <input type = "text" name = "password" placeholder = "Пароль" class = "input"  id = "password">
-           <!-- </div>
-            <div> -->
-                <input  id = "btn" type = "submit" value = "Войти" class = "button">
-            <!-- </div> -->
+            <input type = "text" name = "name" placeholder = "Логин" class = 'input' id = 'name' required>
+            <input type = "text" name = "password" placeholder = "Пароль" class = "input"  id = "password">
+            <input  id = "btn" type = "submit" value = "Войти" class = "button">
         </div>
     </form>
-
-    <p>
-     <% arr.forEach((item) =>{ %>  
-            
-                <%= item.fullname  %>
-          
-         <% }); %> 
-        </p>
-        
- 
-<script>
-
-let app = express();
-    function someFunc(){
-        alert(document.getElementById("name").value + document.getElementById("password").value);
-       
-        
-    }
-
-document.getElementById("btn").onclick = someFunc;
-
-    
-</script>
 </body>
 </html>

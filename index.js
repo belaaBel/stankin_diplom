@@ -19,51 +19,51 @@ let db = new sqlite3.Database('./users.db', sqlite3.OPEN_READWRITE, (err) => {
       console.error(err.message);
     }
     console.log('Connected to the users.db database.');
-  });
-  let arrFullname = []
+});
 
-  let sql = `SELECT * FROM User`;
+let arrFullname = []
+let sql = `SELECT * FROM User`;
    
-  db.all(sql, [], (err, rows) => {
-    if (err) {
+db.all(sql, [], (err, rows) => {
+    if (err){
       throw err;
     }
+
     rows.forEach((row) => {
-      //console.log(row.name);
       arrFullname.push(row);
-      //console.log(arrFullname);
     });
-  });
+});
   
-  app.get("/",urlencodedParser, (req, res) =>{
-    res.render('index', {usss: req.body, arr: arrFullname}); //user: req.body
-  });
+app.get('/',urlencodedParser, (req, res) =>{
+     res.render('index');//, {usss: req.body, arr: arrFullname});
+});
 
-    app.post('/', urlencodedParser, function(req, res){
-        var login = '';
-        var password = '';
+app.post('/', urlencodedParser, function(req, res){
+    var login = '';
+    var password = '';
 
-        arrFullname.forEach(function(item){
-            if(item.login.toString() == req.body.name.toString()){
-                login = req.body.name.toString();
-            }
-        });
-
-        arrFullname.forEach(function(item){
-            console.log(item.login.toString());
-            if(item.password.toString() == req.body.password.toString()){
-                password = req.body.password.toString();
-            }
-        });
-
-        if (password != '' && login != ''){
-            //res.send(`${req.body.name} - ${req.body.password}`)
-            res.render('password');
-        } else{
-            res.send("you shell not pass!!!");
+    arrFullname.forEach(function(item){
+        if(item.login.toString() == req.body.name.toString()){
+            login = req.body.name.toString();
         }
     });
-    //==============================================================================//
+
+    arrFullname.forEach(function(item){
+        if(item.password.toString() == req.body.password.toString()){
+            password = req.body.password.toString();
+        }
+    });
+
+    if (password != '' && login != ''){
+        //res.send(`${req.body.name} - ${req.body.password}`)
+        res.render('password');
+    } else{
+        let err = "Введен не верный логин или пароль";
+        res.render('index_1.ejs', {err: err});
+        //res.send("you shell not pass!!!");
+    }
+});
+//==============================================================================//
   app.get("/user",urlencodedParser, (req, res) =>{
     for(let i = 0; i < arrFullname.length; i++){
         console.log(arrFullname[i]);
@@ -120,9 +120,6 @@ let db = new sqlite3.Database('./users.db', sqlite3.OPEN_READWRITE, (err) => {
     res.render('userDelete', {usss: req.body, arr: students} ); //user: req.body
   });
 
-
-
-
   app.get("/password", function (req, res){
     res.render('password');
   });
@@ -151,4 +148,7 @@ let db = new sqlite3.Database('./users.db', sqlite3.OPEN_READWRITE, (err) => {
     res.render('teachers');
   });
 
+  app.get("/index_1", function (req, res){
+    res.render('index_1');
+  });
   app.listen(3001)

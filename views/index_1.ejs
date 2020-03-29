@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel = "stylesheet" href = "/public/css/style.css">
+</head>
+<body> 
+    <form class = 'form' method="POST" action = "/">
+        <div class = 'fon'>
+           
+                <label class = 'label'>Вход</label>
+           
+            
+                <h4 style = "color: rgb(179, 10, 10)"><%= err %></h4>
+
+                    <input type = "text" name = "name" placeholder = "Логин" class = 'input' id = 'name' required>
+              
+                    <input type = "text" name = "password" placeholder = "Пароль" class = "input"  id = "password" required>
+               
+                    <input  id = "btn" type = "submit" value = "Войти" class = "button">
+               
+           
+        </div>
+    </form>
+    
+</body>
+</html>

@@ -31,7 +31,7 @@
 }
 
 .label{
-    padding-bottom: 10px;
+    /* padding-bottom: px; */
     font: 20px bold;
     text-transform: uppercase;
 }
