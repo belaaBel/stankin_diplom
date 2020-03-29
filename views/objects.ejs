@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel = "stylesheet" href = "/public/css/style.css">
+</head>
+<body> 
+    <form class = 'form' method="POST" action = "/">
+        <div class = 'fon'>
+            <label class = 'label'>Добавьте предмет</label>
+            <div>
+                <input class = 'object' type = "text" placeholder = "Предмет" required value="Современные средства и технологии разработки программных средств">
+            </div>
+            <div>
+                <select id = "group_select">
+                    <option>Бакалавр</option>
+                    <option>Магистр</option>
+                    <option>Аспирант</option>
+                </select>
+                <br>
+                <select id = "group_select">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+                <br>
+                <select id = "group_select">
+                    <option>1</option>
+                    <option>2</option>
+                </select>
+                <br>
+                <select id = "group_select">
+                    <option>09.03.01</option>
+                    <option>09.03.02</option>
+                </select>
+            </div>
+            <div>
+                <input type = "submit" value = "Сохранить" class = "button">
+                <input type = "reset" value = "Отменить" class = "button">
+            </div>
+        </div>
+    </form>
+</body>
+</html>

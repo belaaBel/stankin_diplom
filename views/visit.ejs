@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Посещения студентов</title>
+    <link rel = "stylesheet" href = "/public/css/style.css">
+</head>
+<body> 
+    <table>
+       <tr>
+           <th colspan = '8' align = "center">Предмет 
+               <select id="s1">
+                <option>Гипермедийные среды и технологии</option>
+               </select>
+            </th>
+       </tr>
+        
+        <tr>
+            <th rowspan= '2'>№</th>
+            <th rowspan= '2'>Фамилия, Имя, Отчество студента</th>
+                <th class = "day">Понедельник</th>
+                <th class = "day">Вторник</th>
+                <th class = "day">Среда</th>
+                <th class = "day">Четверг</th>
+                <th class = "day">Пятница</th>
+                <th class = "day">Суббота</th>
+        </tr>
+        <tr>
+            <th id = 'day1'></th>
+            <th id = 'day2'></th>
+            <th id = 'day3'></th>
+            <th id = 'day4'></th>
+            <th id = 'day5'></th>
+            <th id = 'day6'></th>
+        </tr>
+        <% arr.forEach((item) =>{ %>
+       <tr>
+           <td><%= item.ID %></td>
+           <td></td>
+           <td align="center">
+               <select id="s3">
+                    <option>+</option>
+                    <option>1/2</option>
+                    <option>H</option>
+                    <option>X</option>
+                </select>
+            </td>
+            <td align="center">
+                <select id="s3">
+                    <option>+</option>
+                    <option>1/2</option>
+                    <option>H</option>
+                    <option>X</option>
+                 </select>
+             </td>
+             <td align="center">
+                <select id="s3">
+                    <option>+</option>
+                    <option>1/2</option>
+                    <option>H</option>
+                    <option>X</option>
+                 </select>
+             </td>
+             <td align="center">
+                <select id="s3">
+                    <option>+</option>
+                    <option>1/2</option>
+                    <option>H</option>
+                    <option>X</option>
+                 </select>
+             </td>
+             <td align="center">
+                <select id="s3">
+                    <option>+</option>
+                    <option>1/2</option>
+                    <option>H</option>
+                    <option>X</option>
+                 </select>
+             </td>
+             <td align="center">
+                <select id="s3">
+                    <option>+</option>
+                    <option>1/2</option>
+                    <option>H</option>
+                    <option>X</option>
+                 </select>
+             </td>
+       </tr>
+       <% }); %>
+    </table>
+
+    <div class = 'knopka'>
+        <input type = 'submit' value = 'Сохранить' class = 'button'>
+    </div>
+
+    <div class = "mark">
+        <p>* информация по обозначениям</p>
+        <p>+ - студент присутствовал на занятие</p>
+        <p>1/2 - студент присутствовал на половине занятия</p>
+        <p>H - студент отсутствовал на занятие</p>
+        <p>X - перезачет/ предмета в этот день нет</p>
+    </div>
+
+
+
+
+
+    <script type="text/javascript">
+            var d = new Date();
+            var day = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            
+            if(day < 10){
+                day = '0' + day;
+            }
+
+            if(month < 10){
+                month = '0' + month;
+            }
+            if(d.getDay() == 0){
+                document.getElementById('day1').innerHTML = (day+1) + '.' + month + '.' + year;
+                document.getElementById('day2').innerHTML = (day+2) + '.' + month + '.' + year;
+                document.getElementById('day3').innerHTML = (day+3) + '.' + month + '.' + year;
+                document.getElementById('day4').innerHTML = (day+4) + '.' + month + '.' + year;
+                document.getElementById('day5').innerHTML = (day+5) + '.' + month + '.' + year;
+                document.getElementById('day6').innerHTML = (day+6) + '.' + month + '.' + year;
+            }
+            if(d.getDay() == 1){
+                document.getElementById('day1').innerHTML = (day) + '.' + month + '.' + year;
+                document.getElementById('day2').innerHTML = (day+1) + '.' + month + '.' + year;
+                document.getElementById('day3').innerHTML = (day+2) + '.' + month + '.' + year;
+                document.getElementById('day4').innerHTML = (day+3) + '.' + month + '.' + year;
+                document.getElementById('day5').innerHTML = (day+4) + '.' + month + '.' + year;
+                document.getElementById('day6').innerHTML = (day+5) + '.' + month + '.' + year;
+            }
+            if(d.getDay() == 2){
+                document.getElementById('day1').innerHTML = (day-1) + '.' + month + '.' + year;
+                document.getElementById('day2').innerHTML = (day) + '.' + month + '.' + year;
+                document.getElementById('day3').innerHTML = (day+1) + '.' + month + '.' + year;
+                document.getElementById('day4').innerHTML = (day+2) + '.' + month + '.' + year;
+                document.getElementById('day5').innerHTML = (day+3) + '.' + month + '.' + year;
+                document.getElementById('day6').innerHTML = (day+4) + '.' + month + '.' + year;
+            }
+            if(d.getDay() == 3){
+                document.getElementById('day1').innerHTML = (day-2) + '.' + month + '.' + year;
+                document.getElementById('day2').innerHTML = (day-1) + '.' + month + '.' + year;
+                document.getElementById('day3').innerHTML = (day) + '.' + month + '.' + year;
+                document.getElementById('day4').innerHTML = (day+1) + '.' + month + '.' + year;
+                document.getElementById('day5').innerHTML = (day+2) + '.' + month + '.' + year;
+                document.getElementById('day6').innerHTML = (day+3) + '.' + month + '.' + year;
+            }
+            if(d.getDay() == 4){
+                document.getElementById('day1').innerHTML = (day-3) + '.' + month + '.' + year;
+                document.getElementById('day2').innerHTML = (day-2) + '.' + month + '.' + year;
+                document.getElementById('day3').innerHTML = (day-1) + '.' + month + '.' + year;
+                document.getElementById('day4').innerHTML = (day) + '.' + month + '.' + year;
+                document.getElementById('day5').innerHTML = (day+1) + '.' + month + '.' + year;
+                document.getElementById('day6').innerHTML = (day+2) + '.' + month + '.' + year;
+            }
+            if(d.getDay() == 5){
+                document.getElementById('day1').innerHTML = (day-4) + '.' + month + '.' + year;
+                document.getElementById('day2').innerHTML = (day-3) + '.' + month + '.' + year;
+                document.getElementById('day3').innerHTML = (day-2) + '.' + month + '.' + year;
+                document.getElementById('day4').innerHTML = (day-1) + '.' + month + '.' + year;
+                document.getElementById('day5').innerHTML = (day) + '.' + month + '.' + year;
+                document.getElementById('day6').innerHTML = (day+1) + '.' + month + '.' + year;
+            }
+            if(d.getDay() == 6){
+                document.getElementById('day1').innerHTML = (day-5) + '.' + month + '.' + year;
+                document.getElementById('day2').innerHTML = (day-4) + '.' + month + '.' + year;
+                document.getElementById('day3').innerHTML = (day-3) + '.' + month + '.' + year;
+                document.getElementById('day4').innerHTML = (day-2) + '.' + month + '.' + year;
+                document.getElementById('day5').innerHTML = (day-1) + '.' + month + '.' + year;
+                document.getElementById('day6').innerHTML = (day) + '.' + month + '.' + year;
+            }
+        </script>
+</body>
+</html>
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Удаление студентов</title>
+    <link rel = "stylesheet" href = "/public/css/style.css">
+</head>
+<body> 
+    <div class = "mark">
+        <select class = "select">
+            <option>IDB-16-01</option>
+            <option>IDB-16-02</option>
+            <option>IDB-16-03</option>
+        </select>
+    </div>
+    <table class = 'table'>
+        <tr>
+            <th>№</th>
+            <th>Фамилия, Имя, Отчество студента</th>
+            <th>Удалить</th>
+        </tr>
+        
+        <% arr.forEach((item) =>{ %>
+       <tr>
+           <td><%= item.ID %></td>
+           <td><%= item.fullname  %></td>
+           <td class = "checkbox">
+               <input type = "checkbox">
+           </td>
+       <% }); %>
+       </tr>
+
+       <tr>
+    </table>
+
+    <div class = 'knopka'>
+        <input type = 'submit' value = 'Удалить' class = 'button' style="margin-right: 50px; margin-top: 25px;">
+        <input onclick = "OpenDelete()"type = 'submit' value = 'Отмена' class = 'button' style="margin-top: 25px;">
+    </div>
+
+    <script>
+        function OpenDelete(){
+            window.close()
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+
+</head>
+<body> 
+    <input type = "text" name = "name" placeholder = "Логин" class = 'input' id = 'name' required>
+    <div class = 'center'>
+        <h1 style="color: brown;">Отчетик</h1>
+        <div style="padding-bottom: 10px;">
+            <select id = "group_select">
+                <option>ИДБ-16-01</option>
+                <option>ИДБ-16-02</option>
+                <option>ИДБ-16-03</option>
+            </select>
+            <br>
+            <select id = "group_select">
+                <option>Сентябрь</option>
+                <option>Октябрь</option>
+                <option>Ноябрь</option>
+                <option>Декабрь</option>
+                <option>Февраль</option>
+                <option>Март</option>
+                <option>Апрель</option>
+                <option>Май</option>
+            </select>
+        </div>
+        <div>
+            <input onclick="Report()" type = "submit" value = "Сформировать отчет" class = "button_report">
+            <button onclick="myFunction1()">
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/pdfmake.js"></script>
+    
+    <script src="es6-promise.auto.min.js"></script>
+    <script src="jspdf.min.js"></script>
+    <script src="html2canvas.min.js"></script>
+    <script src="html2pdf.min.js"></script>
+    
+    <script>
+        function someFunc(){
+            var pdf = new jsPDF();
+
+            name = document.getElementById("name").value;
+            pass = document.getElementById("password").value;
+
+            pdf.text(name, 20, 20);
+
+            pdf.save('test.pdf');
+        }
+
+        function Report(){
+
+            var doc = new jsPDF();
+
+            name = document.getElementById("name").value;
+            let s = name + "";
+            doc.text(20, 20, name);
+            doc.text(20, 30, transliterate('Катя!!!'));
+            doc.addPage();
+            doc.text(20, 20, 'SAKLNDLKASFBLFBSD');
+            doc.text("Что-то на русском", 10,10, {lang:'ru'});
+
+            doc.save('Test.pdf');
+        }
+
+        //Если с английского на русский, то передаём вторым параметром true.
+        transliterate = (
+        function() {
+        var
+            rus = "щ   ш  ч  ц  ю  я  ё  ж  ъ  ы  э  а б в г д е з и й к л м н о п р с т у ф х ь".split(/ +/g),
+            eng = "shh sh ch cz yu ya yo zh `` y' e` a b v g d e z i j k l m n o p r s t u f x `".split(/ +/g)
+        ;
+        return function(text, engToRus) {
+        var x;
+        for(x = 0; x < rus.length; x++) {
+            text = text.split(engToRus ? eng[x] : rus[x]).join(engToRus ? rus[x] : eng[x]);
+            text = text.split(engToRus ? eng[x].toUpperCase() : rus[x].toUpperCase()).join(engToRus ? rus[x].toUpperCase() : eng[x].toUpperCase());	
+        }
+        return text;
+        }
+        }
+        )();
+    </script>
+</body>
+</html>

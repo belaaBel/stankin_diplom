@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление студента</title>
+    <link rel = "stylesheet" href = "/public/css/style.css">
+    <link title="Статьи с сайта htmlbook.ru" > 
+</head>
+<body> 
+    <div id = "formAddSrudent">
+        <input type = "text" name = "group" placeholder = "Группа" class = 'input' required>
+        <input type = "text" name = "fullname" placeholder = "Фамилия" class = 'input' required>
+        <input type = "text" name = "name" placeholder = "Имя" class = 'input' required>
+        <input type = "text" name = "lastname" placeholder = "Отчество" class = 'input' required>
+        <input type = "text" name = "right" placeholder = "Направление" class = 'input' required>
+    </div>
+
+    <div id = 'knopka'>
+        <input onclick = "Save()" type = 'submit' value = 'Сохранить' class = 'button' style="margin-right: 50px; margin-top: 25px;">
+        <input onclick = "Cancel()" type = 'submit' value = 'Отмена' class = 'button' style="margin-top: 25px;">
+    </div>
+
+    <script>
+        
+        function Save(){
+            window.close()
+        }
+        function Cancel(){
+            window.close()
+        }
+    </script>
+</body>
+</html>

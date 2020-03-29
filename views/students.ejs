@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список студентов</title>
+    <link rel = "stylesheet" href = "/public/css/style.css">
+
+    <nav class = 'menu'>
+        <ul class = "topmenu">
+            <li><a href="" >Мои действия</a>
+                <ul class = "submenu">
+                    <li><a href="">Журнал посещений студентов</a></li>
+                    <li><a href="">Отчет</a></li>
+                    <li><a href="">Сменить пароль</a></li>
+                    <li><a href="">Выход</a></li>
+                </ul>
+            </li>
+            <li style = "font-weight: bold; color: white">Сотрудник деканата Имя Фамилия Отчество</li>
+            <li><a href="">Выход</a></li>
+        </ul>
+    </nav>
+
+   <script>
+       window.outerWidth = 200;
+window.outerHeight = 300;
+   </script>
+</head>
+<body> 
+    <br>
+    <div class = "mark">
+        <select class = "select">
+            <option>IDB-16-01</option>
+            <option>IDB-16-02</option>
+            <option>IDB-16-03</option>
+        </select>
+    </div>
+    <table class = 'table'>
+        <tr>
+            <th>№</th>
+            <th>Фамилия, Имя, Отчество студента</th>
+            <th>Код направления</th>
+        </tr>
+        
+        <% arr.forEach((item) =>{ %>
+       <tr>
+           <td><%= item.ID %></td>
+           <td><%= item.fullname  %></td>
+           <td><%= item.kod  %></td>
+       <% }); %>
+    </table>
+
+    <div class = 'knopka'>
+        <input onclick = "OpenAdd()" type = 'submit' value = 'Добавить' class = 'button' style="margin-right: 50px; margin-top: 25px;">
+        <input onclick = "OpenDelete()"type = 'submit' value = 'Удалить' class = 'button' style="margin-top: 25px;">
+    </div>
+
+    <script>
+        function OpenAdd(){
+            win = window.open("studentAdd","Добавление студента","top=150,left=250,height=400,width=900");
+        }
+
+        function OpenDelete(){
+            win = window.open("studentsDelete", "Удаление студентов", "top=150,left=250,height=400,width=900");
+        }
+    </script>
+</body>
+</html>
+
