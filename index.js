@@ -13,6 +13,7 @@ app.set('view engine','ejs');
 
 app.use("/public", express.static('public'));
 
+//==============================================================================//
 let db = new sqlite3.Database('./users.db', sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
@@ -30,54 +31,39 @@ let db = new sqlite3.Database('./users.db', sqlite3.OPEN_READWRITE, (err) => {
     rows.forEach((row) => {
       //console.log(row.name);
       arrFullname.push(row);
-      console.log(arrFullname);
+      //console.log(arrFullname);
     });
   });
   
   app.get("/",urlencodedParser, (req, res) =>{
-    //    for(let i = 0; i < arrFullname.length; i++){
-    //       console.log(arrFullname[i]);
-    //   }
-
     res.render('index', {usss: req.body, arr: arrFullname}); //user: req.body
   });
 
-   app.post('/', urlencodedParser, function(req, res){
-    //   if(!req.body) return res.sendStatus(400)
-    //     console.log(req.body);
-    if(!req.body) return res.sendStatus(400);
-    console.log(req.body);
+    app.post('/', urlencodedParser, function(req, res){
+        var login = '';
+        var password = '';
 
-    var login = '';
-    var password = '';
+        arrFullname.forEach(function(item){
+            if(item.login.toString() == req.body.name.toString()){
+                login = req.body.name.toString();
+            }
+        });
 
-    arrFullname.forEach(function(item){
-        console.log(item.login.toString());
-        console.log(req.body.name.toString());
-        if(item.login.toString() == req.body.name.toString()){
-            login = req.body.name.toString();
+        arrFullname.forEach(function(item){
+            console.log(item.login.toString());
+            if(item.password.toString() == req.body.password.toString()){
+                password = req.body.password.toString();
+            }
+        });
+
+        if (password != '' && login != ''){
+            //res.send(`${req.body.name} - ${req.body.password}`)
+            res.render('password');
+        } else{
+            res.send("you shell not pass!!!");
         }
     });
-
-    arrFullname.forEach(function(item){
-        console.log(item.login.toString());
-        if(item.password.toString() == req.body.password.toString()){
-            password = req.body.password.toString();
-        }
-    });
-
-    console.log(`login = ${login} and password = ${password}`);
-    if(password != '' && login != ''){
-        res.send(`${req.body.name} - ${req.body.password}`)
-    } else {
-        res.send("you shell not pass!!!");
-    }
-
-
-
-     // res.render('index', {usss: req.body, arr: arrFullname});
-    });
-  
+    //==============================================================================//
   app.get("/user",urlencodedParser, (req, res) =>{
     for(let i = 0; i < arrFullname.length; i++){
         console.log(arrFullname[i]);
