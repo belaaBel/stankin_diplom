@@ -64,15 +64,15 @@ app.post('/', urlencodedParser, function(req, res){
         role = arrFullname[i].role;
         res.render('password', {role: arrFullname[i].role, name: arrFullname[i].fullname});
 
-        app.get("/password", function (req, res){
-            res.render('password');
-          });
     } else{
-       
         let err = "Введен не верный логин или пароль";
         res.render('index_1.ejs', {err: err});
         //res.send("you shell not pass!!!");
     }
+});
+
+app.get("/password", function (req, res){
+    res.render('password', {role : role});
 });
 //==============================================================================//
   app.get("/user",urlencodedParser, (req, res) =>{
@@ -125,9 +125,7 @@ app.post('/', urlencodedParser, function(req, res){
     res.render('userDelete', {usss: req.body, arr: students} ); //user: req.body
   });
 
-  app.get("/password", function (req, res){
-    res.render('password', {role : role});
-  });
+  
 
  
 
