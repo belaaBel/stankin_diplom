@@ -41,10 +41,13 @@ app.get('/',urlencodedParser, (req, res) =>{
 app.post('/', urlencodedParser, function(req, res){
     var login = '';
     var password = '';
+    let i;
 
     arrFullname.forEach(function(item){
         if(item.login.toString() == req.body.name.toString()){
             login = req.body.name.toString();
+            i = item.id;
+            console.log("ID:" + i);
         }
     });
 
@@ -56,8 +59,10 @@ app.post('/', urlencodedParser, function(req, res){
 
     if (password != '' && login != ''){
         //res.send(`${req.body.name} - ${req.body.password}`)
-        res.render('password');
+        console.log("ROLE:" + arrFullname[i].role + "name:" + arrFullname[i].fullname);
+        res.render('password', {role: arrFullname[i].role, name: arrFullname[i].fullname});
     } else{
+       
         let err = "Введен не верный логин или пароль";
         res.render('index_1.ejs', {err: err});
         //res.send("you shell not pass!!!");
@@ -81,18 +86,12 @@ app.post('/', urlencodedParser, function(req, res){
       throw err;
     }
     rows.forEach((row) => {
-      console.log(row.name);
       students.push(row);
-      console.log(students);
     });
   });
   
   app.get("/visit",urlencodedParser, (req, res) =>{
-      for(let i = 0; i < students.length; i++){
-          console.log(students[i]);
-      }
-  
-   res.render('visit', {usss: req.body, arr: students} ); //user: req.body
+    res.render('visit', {usss: req.body, arr: students} ); //user: req.body
   });
   
    
