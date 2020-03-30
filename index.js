@@ -70,10 +70,6 @@ app.post('/', urlencodedParser, function(req, res){
         //res.send("you shell not pass!!!");
     }
 });
-
-app.get("/password", function (req, res){
-    res.render('password', {role : role});
-});
 //==============================================================================//
   app.get("/user",urlencodedParser, (req, res) =>{
     for(let i = 0; i < arrFullname.length; i++){
@@ -95,7 +91,7 @@ app.get("/password", function (req, res){
       students.push(row);
     });
   });
-  
+//==============================================================================//
   app.get("/visit",urlencodedParser, (req, res) =>{
     res.render('visit', {usss: req.body, arr: students} ); //user: req.body
   });
@@ -127,7 +123,9 @@ app.get("/password", function (req, res){
 
   
 
- 
+  app.get("/password", function (req, res){
+    res.render('password', {role : role});
+  });
 
   app.get("/studentAdd", function (req, res){
     res.render('studentAdd');
