@@ -21,7 +21,8 @@ let db = new sqlite3.Database('./users.db', sqlite3.OPEN_READWRITE, (err) => {
     console.log('Connected to the users.db database.');
 });
 
-let arrFullname = []
+let arrFullname = [];
+let role = "";
 let sql = `SELECT * FROM User`;
    
 db.all(sql, [], (err, rows) => {
@@ -60,7 +61,12 @@ app.post('/', urlencodedParser, function(req, res){
     if (password != '' && login != ''){
         //res.send(`${req.body.name} - ${req.body.password}`)
         console.log("ROLE:" + arrFullname[i].role + "name:" + arrFullname[i].fullname);
+        role = arrFullname[i].role;
         res.render('password', {role: arrFullname[i].role, name: arrFullname[i].fullname});
+
+        app.get("/password", function (req, res){
+            res.render('password');
+          });
     } else{
        
         let err = "Введен не верный логин или пароль";
@@ -120,8 +126,10 @@ app.post('/', urlencodedParser, function(req, res){
   });
 
   app.get("/password", function (req, res){
-    res.render('password');
+    res.render('password', {role : role});
   });
+
+ 
 
   app.get("/studentAdd", function (req, res){
     res.render('studentAdd');
