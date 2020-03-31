@@ -5,8 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Посещения студентов</title>
     <link rel = "stylesheet" href = "/public/css/style.css">
+
+    <nav class = 'menu'>
+        <ul class = "topmenu">
+            <li><a href="#">Мои действия</a>
+                <ul class = "submenu">
+                   <% if(role == "староста") { %>
+                        <li><a href="/visit">Журнал посещений студентов</a></li>
+                        <li><a href='/report_st'>Отчет</a></li>
+                        <li><a href="/password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } else if(role == "сотрудник деканата"){ %>
+                        <li><a href="/report_dek">Отчет</a></li>
+                        <li><a href="/students">Студенты</a></li>
+                        <li><a href="/password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } else{ %>
+                        <li><a href="/user">Пользователи</a></li>
+                        <li><a href="password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } %>
+                </ul>
+            </li>
+            <li style = "font-weight: bold; color: white"><%= role %> <%= name %></li>
+            <li><a href="/">Выход</a></li>
+        </ul>
+    </nav>
 </head>
 <body> 
+    <br>
     <table>
        <tr>
            <th colspan = '8' align = "center">Предмет 

@@ -8,16 +8,28 @@
 
     <nav class = 'menu'>
         <ul class = "topmenu">
-            <li><a href="" >Мои действия</a>
+            <li><a href="#">Мои действия</a>
                 <ul class = "submenu">
-                    <li><a href="">Журнал посещений студентов</a></li>
-                    <li><a href="">Отчет</a></li>
-                    <li><a href="">Сменить пароль</a></li>
-                    <li><a href="">Выход</a></li>
+                    
+                   <% if(role == "староста") { %>
+                        <li><a href="/visit">Журнал посещений студентов</a></li>
+                        <li><a href='/report_st'>Отчет</a></li>
+                        <li><a href="/password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } else if(role == "сотрудник деканата"){ %>
+                        <li><a href="/report_dek">Отчет</a></li>
+                        <li><a href="/students">Студенты</a></li>
+                        <li><a href="/password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } else{ %>
+                        <li><a href="/user">Пользователи</a></li>
+                        <li><a href="/password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } %>
                 </ul>
             </li>
-            <li style = "font-weight: bold; color: white">Сотрудник деканата Имя Фамилия Отчество</li>
-            <li><a href="">Выход</a></li>
+            <li style = "font-weight: bold; color: white"><%= role %> <%= name %></li>
+            <li><a href="/">Выход</a></li>
         </ul>
     </nav>
 </head>
