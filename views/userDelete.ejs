@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Удаление студентов</title>
+    <title>Удаление пользователей</title>
     <link rel = "stylesheet" href = "/public/css/style.css">
 </head>
 <body> 
@@ -11,13 +11,13 @@
         <tr>
             <th>№</th>
             <th>Фамилия, Имя, Отчество студента</th>
-            <th>Группа</th>
+            <th>Логин</th>
             <th>Удалить</th>
         </tr>
         
         <% arr.forEach((item) =>{ %>
        <tr>
-           <td><%= item.ID %></td>
+           <td><%= item.id+1 %></td>
            <td><%= item.fullname  %></td>
            <td><%= item.login  %></td>
            <td class = "checkbox">

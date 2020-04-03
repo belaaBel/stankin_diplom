@@ -36,6 +36,7 @@ db.all(sql, [], (err, rows) => {
       arrFullname.push(row);
     });
 });
+
 let err = '';
 let login = '';
 let password = '';
@@ -47,7 +48,7 @@ let flag = 1;
 let nameK = '';
 
 app.get('/',urlencodedParser, (req, res) =>{
-     res.render('index');//, {usss: req.body, arr: arrFullname});
+     res.render('index');
 });
 
 app.post('/', urlencodedParser, function(req, res){
@@ -66,82 +67,29 @@ app.post('/', urlencodedParser, function(req, res){
     });
 
     if (password != '' && login != ''){
-        //res.send(`${req.body.name} - ${req.body.password}`)
-        console.log("ROLE:" + arrFullname[i].role + "name:" + arrFullname[i].fullname);
         role = arrFullname[i].role;
+        console.log("hxhxhxhh" + role);
         name = arrFullname[i].fullname;
         res.render('password', {role: arrFullname[i].role, name: arrFullname[i].fullname, flag : flag, err: err});
 
     } else{
         let err = "Введен не верный логин или пароль";
         res.render('index_1.ejs', {err: err});
-        //res.send("you shell not pass!!!");
     }
-
-    //================================================//
-    // password_alt = req.body.password_alt;
-    // password_new = req.body.password_new;
-    // password_new_replay = req.body.password_new_replay;
-
-    // if(password == password_alt){
-    //     if(password_new != password_alt){
-    //         if(password_new_replay == password_new){
-    //             //flag = 0;
-    //             console.log('Yes');
-    //             let data = [password_new];
-    //             let update_sql = 'UPDATE User SET password = ? WHERE id=' + i;
-
-    //             db.run(update_sql, data, function(err) {
-    //                 if (err) {
-    //                   return console.error(err.message);
-    //                 }
-    //                 console.log(`Row(s) updated: ${this.changes}`);
-                   
-    //             });
-    //             db.close();
-    //         }
-    //         else{
-    //             console.log('Error');
-    //             flag = 1;
-    //             err = "Пароли не совпадают";
-    //             res.render('password', {role : role, name : name, err : err, flag : flag});
-    //         }
-    //     }
-    //     else{
-    //         console.log('Error');
-    //         flag = 1;
-    //         err = "Новый пароль совпадает со старым";
-    //         res.render('password', {role : role, name : name, err : err, flag : flag});
-    //     }
-    // }
-    // else{
-    //     console.log('Error');
-    //     flag = 1;
-    //     err = "Введен неверный пароль";
-    //     res.render('password', {role : role, name : name, err : err, flag : flag});
-    // }
-    // flag = 0;
-     //flag
 });
-//================kot
+//==============================================================================//
 app.post("/password",urlencodedParser,function(req, res){
     password_alt = req.body.password_alt;
     password_new = req.body.password_new;
     password_new_replay = req.body.password_new_replay;
-    console.log("pass"+password);
-    console.log("login"+login);
     
     arrFullname.forEach(function(item){
-        
-            console.log(item.id);
-if(item.id == 0){
-    id = item.id;
-    console.log("item.id" + id);
-}
-            // id = item.id;
-            // console.log("ID:" + id);
-       
+        if(item.id == 0){
+            id = item.id;   
+        }
     });
+
+   
 
     if(password == password_alt){
         if(password_new != password_alt){
@@ -156,27 +104,24 @@ if(item.id == 0){
                     if (err) {
                        return console.error(err.message);
                     }
+                    console.log(role);
                     console.log(`Row(s) updated: ${this.changes}`);
                    
-                });
-                db.close();
+                });   
             }
             else{
-                console.log('Error');
                 flag = 1;
                 err = "Пароли не совпадают";
                 res.render('password', {role : role, name : name, err : err, flag : flag});
             }
         }
         else{
-            console.log('Error');
             flag = 1;
             err = "Новый пароль совпадает со старым";
             res.render('password', {role : role, name : name, err : err, flag : flag});
         }
     }
     else{
-        console.log('Error');
         flag = 1;
         err = "Введен неверный пароль";
         res.render('password', {role : role, name : name, err : err, flag : flag});
@@ -185,11 +130,11 @@ if(item.id == 0){
     res.render('password', {role : role, name : name, err : err, flag : flag});
 });
 
-//==============================================================================//
+
 app.get("/password", function (req, res){
     login = req.query.name;
     password = req.query.password;
-    console.log("login="+login+"   password="+password);
+
     res.render('password', {role : role, name : name, err : err, flag : flag});
 });
 //==============================================================================//
@@ -200,7 +145,13 @@ app.get("/password", function (req, res){
 
   res.render('user', {usss: req.body, arr: arrFullname, role : role, name : name}); //user: req.body
   });
-  
+
+  app.get("/userDelete",urlencodedParser, (req, res) =>{
+    
+
+    res.render('userDelete', {usss: req.body, arr: arrFullname} ); //user: req.body
+  });
+//==============================================================================//
   let students = []
 
   let std_sql = `SELECT * FROM Students`;
@@ -213,20 +164,49 @@ app.get("/password", function (req, res){
       students.push(row);
     });
   });
-//==============================================================================//
+
+  app.post("/visit",urlencodedParser,function(req, res){
+    let day = req.body.day;
+    let visit = req.body.visit;
+    
+    let data = [day];
+               
+    let update_sql = 'UPDATE Visits SET day = ?';
+
+    db.run(update_sql, data, function(err) {
+        if (err) {
+           return console.error(err.message);
+        }
+       
+        console.log(`Row(s) updated: ${this.changes}`);
+       
+    });   
+    res.render('visit', {arr: students, role : role, name: name} ); 
+  });
+
   app.get("/visit",urlencodedParser, (req, res) =>{
-    res.render('visit', {usss: req.body, arr: students, role : role, name: name} ); //user: req.body
+    res.render('visit', {user: req.body, arr: students, role : role, name: name} ); //user: req.body
   });
   
-   
+//==============================================================================//   
   app.get("/students",urlencodedParser, (req, res) =>{
-    for(let i = 0; i < students.length; i++){
-        console.log(students[i]);
-    }
-
-    res.render('students', {usss: req.body, arr: students, role : role, name : name} ); //user: req.body
+    res.render('students', {arr: students, role : role, name : name}); //user: req.body
   });
 
+  app.post("/students",urlencodedParser,function(req, res){
+    
+        res.render('students', {arr: students, role : role, name : name});
+  });
+
+  app.get("/studentAdd", function (req, res){
+    res.render('studentAdd');
+  });
+
+  app.post("/studentAdd", function (req, res){
+    let group = req.query.group;
+    console.log(group);
+    res.render('studentAdd');
+  });
   app.get("/studentsDelete",urlencodedParser, (req, res) =>{
     for(let i = 0; i < students.length; i++){
         console.log(students[i]);
@@ -235,21 +215,13 @@ app.get("/password", function (req, res){
     res.render('studentsDelete', {usss: req.body, arr: students} ); //user: req.body
   });
 
-  app.get("/userDelete",urlencodedParser, (req, res) =>{
-    for(let i = 0; i < students.length; i++){
-        console.log(students[i]);
-    }
-
-    res.render('userDelete', {usss: req.body, arr: students} ); //user: req.body
-  });
+  
 
   
 
   
 
-  app.get("/studentAdd", function (req, res){
-    res.render('studentAdd');
-  });
+ 
 
   app.get("/userAdd", function (req, res){
     res.render('userAdd');
@@ -274,4 +246,4 @@ app.get("/password", function (req, res){
   app.get("/index_1", function (req, res){
     res.render('index_1');
   });
-  app.listen(3001)
+  app.listen(3002)
