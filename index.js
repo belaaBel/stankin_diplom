@@ -165,27 +165,35 @@ app.get("/password", function (req, res){
     });
   });
 
+ 
   app.post("/visit",urlencodedParser,function(req, res){
     let day = req.body.day;
     let visit = req.body.visit;
+    let id;
+    let data = [];
+    for(let i = 0; i < students.length; i++){
+        data[i] = [day, visit[i]];
+        id = i+1;
+        let update_sql = 'UPDATE Visits SET day = ?, visit = ? WHERE id = '+ id;
+    //let update_sql = 'UPDATE Visits SET visit = ? WHERE student = ? ';
     
-    let data = [day];
-               
-    let update_sql = 'UPDATE Visits SET day = ?';
-
-    db.run(update_sql, data, function(err) {
+    db.run(update_sql, data[i], function(err) {
         if (err) {
            return console.error(err.message);
         }
-       
         console.log(`Row(s) updated: ${this.changes}`);
        
-    });   
+     });  
+    } 
+               
+
+    
+
     res.render('visit', {arr: students, role : role, name: name} ); 
   });
 
   app.get("/visit",urlencodedParser, (req, res) =>{
-    res.render('visit', {user: req.body, arr: students, role : role, name: name} ); //user: req.body
+    res.render('visit', {arr: students, role : role, name: name} ); //user: req.body
   });
   
 //==============================================================================//   
