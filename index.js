@@ -151,85 +151,95 @@ app.get("/password", function (req, res){
 
     res.render('userDelete', {usss: req.body, arr: arrFullname} ); //user: req.body
   });
+
 //==============================================================================//
-  let students = []
+  
+let students = []
 
-  let std_sql = `SELECT * FROM Students`;
-   
-  db.all(std_sql, [], (err, rows) => {
-    if (err) {
-      throw err;
-    }
-    rows.forEach((row) => {
-      students.push(row);
-    });
-  });
-
+let std_sql = `SELECT * FROM Students`;
  
-  app.post("/visit",urlencodedParser,function(req, res){
+db.all(std_sql, [], (err, rows) => {
+  if (err) {
+    throw err;
+  }
+  rows.forEach((row) => {
+    students.push(row);
+  });
+});
+
+app.post("/visit",urlencodedParser,function(req, res){
     let day = req.body.day;
     let visit = req.body.visit;
+    let subject = req.body.subject;
     let id;
     let data = [];
-    for(let i = 0; i < students.length; i++){
-        data[i] = [day, visit[i]];
-        id = i+1;
-        let update_sql = 'UPDATE Visits SET day = ?, visit = ? WHERE id = '+ id;
-    //let update_sql = 'UPDATE Visits SET visit = ? WHERE student = ? ';
-    
-    db.run(update_sql, data[i], function(err) {
-        if (err) {
-           return console.error(err.message);
-        }
-        console.log(`Row(s) updated: ${this.changes}`);
-       
-     });  
-    } 
-               
 
-    
+    for(let i = 0; i < students.length; i++){
+        data[i] = [day, subject, visit[i]];
+        id = i+1;
+
+        let update_sql = 'UPDATE Visits SET day = ?, subject = ?, visit = ? WHERE id = '+ id;
+       
+        db.run(update_sql, data[i], function(err) {
+            if (err) {
+               return console.error(err.message);
+            }
+            console.log(`Row(s) updated: ${this.changes}`);
+           
+         });  
+    } 
 
     res.render('visit', {arr: students, role : role, name: name} ); 
   });
 
   app.get("/visit",urlencodedParser, (req, res) =>{
+   
     res.render('visit', {arr: students, role : role, name: name} ); //user: req.body
   });
   
 //==============================================================================//   
+
+
   app.get("/students",urlencodedParser, (req, res) =>{
+   
     res.render('students', {arr: students, role : role, name : name}); //user: req.body
   });
 
   app.post("/students",urlencodedParser,function(req, res){
+    let group_std = [];
+    let group = req.body.group;
     
-        res.render('students', {arr: students, role : role, name : name});
+    for(let i = 0; i < students.length; i++){
+        if(students[i].group == group){
+            group_std[i] = students[i];
+        }
+    } 
+    
+    res.render('students', {arr: group_std, role : role, name : name});
   });
 
+//==============================================================================// 
+
   app.get("/studentAdd", function (req, res){
-    res.render('studentAdd');
+    let group = req.query.group;
+    let kod = req.query.kod;
+    let fullname = req.query.fullname;
+    let firstname = req.query.firstname;
+    let lastname = req.query.lastname;
+    let name = fullname + " " + firstname + " " + lastname;
+   
+    res.render('studentAdd', {role : role, name : name});
   });
 
   app.post("/studentAdd", function (req, res){
-    let group = req.query.group;
-    console.log(group);
-    res.render('studentAdd');
+    res.render('studentAdd', {role : role, name : name});
   });
+
+  //==============================================================================//
   app.get("/studentsDelete",urlencodedParser, (req, res) =>{
-    for(let i = 0; i < students.length; i++){
-        console.log(students[i]);
-    }
 
     res.render('studentsDelete', {usss: req.body, arr: students} ); //user: req.body
   });
-
-  
-
-  
-
-  
-
- 
 
   app.get("/userAdd", function (req, res){
     res.render('userAdd');

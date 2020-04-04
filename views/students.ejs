@@ -40,36 +40,52 @@ window.outerHeight = 300;
 </head>
 <body> 
     <br>
-   
-    <div class = "mark">
-        <select class = "select">
-            <option>IDB-16-01</option>
-            <option>IDB-16-02</option>
-            <option>IDB-16-03</option>
-        </select>
-    </div>
-    <table class = 'table'>
+    <form name = "form" method="post" action = "/students">
+        <div class = "mark">
+            <input style="text-align:center" list = "group" name = "group" id = "grp">
+            <datalist id = "group">
+                <option value="IDB-16-01"></option>
+                <option value="IDB-16-02"></option>
+                <option value="IDB-16-03"></option>
+            </datalist>
+        </div>
+        <table class = 'table'>
+            <tr>
+                <th>№</th>
+                <th>Фамилия, Имя, Отчество студента</th>
+                <th>Код направления</th>
+            </tr>
+            
+            <% arr.forEach((item) =>{ %>
         <tr>
-            <th>№</th>
-            <th>Фамилия, Имя, Отчество студента</th>
-            <th>Код направления</th>
+            <td><%= item.ID %></td>
+            <td><%= item.fullname  %></td>
+            <td><%= item.kod  %></td>
+        <% }); %>
         </tr>
-        
-        <% arr.forEach((item) =>{ %>
-       <tr>
-           
-           <td><%= item.ID %></td>
-           <td><%= item.fullname  %></td>
-           <td><%= item.kod  %></td>
-       <% }); %>
-    </table>
+        </table>
 
-    <div class = 'knopka'>
-        <input onclick = "OpenAdd()" type = 'submit' value = 'Добавить' class = 'button' style="margin-right: 50px; margin-top: 25px;">
-        <input onclick = "OpenDelete()"type = 'submit' value = 'Удалить' class = 'button' style="margin-top: 25px;">
-    </div>
+        <div class = 'knopka' id = "btn">
+            <input onclick = "GroupOpen()" type = 'submit' value = 'Загрузить группу' class = 'button' style="width: 200px; margin-right: 50px; margin-top: 25px;">
+        </div>
 
+        <div class = 'knopka' id = "btn">
+            <input onclick = "OpenAdd()" type = 'submit' value = 'Загрузить группу' class = 'button' style="width: 200px; margin-right: 50px; margin-top: 25px;">
+        </div>
+        <!-- <div class = 'knopka' id = "btn"></div>  -->
+        <!-- <div class = 'knopka' id = "divBtn"></div> -->
+    </form>
+
+    
     <script>
+        function GroupOpen(){
+            // win = window.open("studentAdd","Добавление студента","top=150,left=250,height=400,width=900");
+            // var btn = document.getElementById("btn");
+            // btn.innerHTML = '<input onclick = "OpenAdd()" type = "submit" type="button" value="Добавить" class = "button" style="margin-right: 50px; margin-top: 25px;">';
+
+            // var divBtn = document.getElementById("divBtn");
+            // divBtn.innerHTML = '<input onclick = "OpenDelete()" type = "submit" type="button" value="Удалить" class = "button" style="margin-top: 25px;">';   
+        }
         function OpenAdd(){
             win = window.open("studentAdd","Добавление студента","top=150,left=250,height=400,width=900");
         }

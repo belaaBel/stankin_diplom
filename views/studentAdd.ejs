@@ -8,28 +8,20 @@
     <link title="Статьи с сайта htmlbook.ru" > 
 </head>
 <body> 
-    <form method="POST" action = "/studentsAdd">
+   
+    <form method="get" action = "/studentAdd">
         <div id = "formAddSrudent">
-            <input type = "text" name = "group" placeholder = "Группа" class = 'input' required>
-            <input type = "text" name = "fullname" placeholder = "Фамилия" class = 'input' required>
-            <input type = "text" name = "name" placeholder = "Имя" class = 'input' required>
-            <input type = "text" name = "lastname" placeholder = "Отчество" class = 'input' required>
-            <input type = "text" name = "right" placeholder = "Направление" class = 'input' required>
-        </div>
-
-        <div id = 'knopka'>
-            <input onclick = "Save()" type = 'submit' value = 'Сохранить' class = 'button' style="margin-right: 50px; margin-top: 25px;">
-            <input onclick = "Cancel()" type = 'submit' value = 'Отмена' class = 'button' style="margin-top: 25px;">
-        </div>
+            <input type = "text" name = "group" placeholder = "Группа" class = 'input' >
+            <input type = "text" name = "fullname" placeholder = "Фамилия" class = 'input'>
+            <input type = "text" name = "firstname" placeholder = "Имя" class = 'input' >
+            <input type = "text" name = "lastname" placeholder = "Отчество" class = 'input' >
+            <input type = "text" id = "kod"  name = "kod" class = 'input' >
+       
+         <!-- <div id = 'knopka'> --> 
+            <input  id = "btn" type = 'submit' value = 'Сохранить' class = 'button'>
+         <!-- <input  type = 'submit' value = 'Отмена' class = 'button' style="margin-top: 25px;"> 
+        </div> -->
     </form>
-    <script>
-        
-        function Save(){
-            window.close()
-        }
-        function Cancel(){
-            window.close()
-        }
-    </script>
+    
 </body>
 </html>
