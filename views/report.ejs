@@ -1,0 +1,72 @@
+<html>
+<head>
+<style>
+button{
+    display:block;
+    height:20px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+td{
+    border: solid 1px;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" ></script>
+
+<script>
+let doc  = new jsPDF();
+   function getPDF() {
+    html2canvas(document.getElementById("target"), {
+        onrendered: function (canvas) {
+            document.body.appendChild(canvas);
+            var imgData = canvas.toDataURL('image/png');
+            //doc.addImage(canvas.toDataURL("image/jpeg"), "JPEG", 15, 40, 180, 160);
+            doc.addImage(imgData,'PNG', 10, 10);
+            doc.save("test.pdf");
+        },
+        allowTaint:true,
+        useCORS: true,
+        width:2000,
+        height:1000
+    });
+}
+</script>
+</head>
+<body>
+    <div id="target" style = "text-align: center;">
+        <h1>Отчет 
+            <% if(group == "IDB-16-01"){ %>
+                ИДБ-16-01
+            <% } else if(group == "IDB-16-02"){ %>
+                ИДБ-16-02
+            <% } else{ %>
+                 ИДБ-16-03
+            <% } %>
+        </h1> 
+        <h3><%= month %></h3>
+
+        <table  style = "display: flex;flex-direction: column;align-items: center;border-collapse: collapse;">
+            <tr style = "border: solid 1px; border-collapse: collapse;">
+                <th style = "border: solid 1px; border-collapse: collapse;">№</th>
+                <th style = "border: solid 1px; border-collapse: collapse;">Фамилия Имя Отчетсво</th>
+                <th style = "border: solid 1px; border-collapse: collapse; width: 100px;">Всего пропущено занятий</th>
+                <th style = "border: solid 1px; border-collapse: collapse; width: 100px;">Пропущено занятий по уважительной причине</th>
+            </tr>
+            <% visit.forEach((item) =>{ %>
+            <tr style = " border: solid 1px; border-collapse: collapse;">
+                <td style = "border: solid 1px; border-collapse: collapse;"><%= item.id %></td>
+                <td style = "border: solid 1px; border-collapse: collapse;"><%= item.student  %></td>
+                <td style = "text-align:center; border: solid 1px; border-collapse: collapse;"><%= item.visit  %></td>
+                <% visit_uv.forEach((vis) =>{ %>
+                    <% if(item.id == vis.id){ %>
+                        <td style = "text-align:center; border: solid 1px; border-collapse: collapse;"><%= vis.visit %></td>
+                    <% } %>
+                <% }); %>
+            <% }); %>
+            </tr>
+        </table>
+    </div>
+    <input onclick = "getPDF()" type="submit" value="button">
+<body>
+</html>

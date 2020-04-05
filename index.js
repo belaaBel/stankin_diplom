@@ -36,6 +36,18 @@ db.all(sql, [], (err, rows) => {
       arrFullname.push(row);
     });
 });
+let vist = [];
+let sql_visit = `SELECT * FROM Visits`;
+   
+    db.all(sql_visit, [], (err, rows) => {
+    if (err){
+      throw err;
+    }
+
+    rows.forEach((row) => {
+      vist.push(row);
+    });
+});
 
 let err = '';
 let login = '';
@@ -249,10 +261,97 @@ app.post("/visit",urlencodedParser,function(req, res){
     res.render('report_st', {role : role, name: name});
   });
 
+  let grp;
+  let month;
+
   app.get("/report_dek", function (req, res){
+    grp = req.query.grp;
+    month = req.query.mnth;
     res.render('report_dek', {role : role, name : name});
   });
 
+  app.post("/report_dek", function (req, res){
+    res.render('report_dek', {role : role, name : name});
+  });
+
+  app.get("/report", function (req, res){
+    let std = [];
+   
+    let std_visit = [];
+    let visit = [];
+    
+
+    for(let i = 0, j = 0; i < students.length; i++){
+        
+        //if(students[i].group == grp){
+            std[j] = students[i];
+          
+            j++;
+            console.log(j);
+       // }
+    } 
+
+    
+
+    for(let i = 0, j = 0; i < vist.length; i++){
+        
+        // if(vist[i].group == grp){
+            std_visit[j] = vist[i];
+            visit[j] = vist[i];
+            if(std_visit[j].visit == "+"){
+                std_visit[j].visit = "0";
+                visit[j].visit = "";
+            }
+            if(std_visit[j].visit == "1/2"){
+                std_visit[j].visit = "1/2";
+                visit[j].visit = "1/2";
+            }
+            if(std_visit[j].visit == "H"){
+                std_visit[j].visit = "2";
+                visit[j].visit = "";
+            }
+            if(std_visit[j].visit == "X"){
+                std_visit[j].visit = "2";
+               visit[j].visit = "2";
+            }
+            j++;
+        //}
+    } 
+    // for(let i = 0, j = 0; i < vist.length; i++){
+        
+    //     //if(vist[i].group == grp){
+    //         visit[j] = vist[i];
+         
+    //         if(visit[j].visit == "+"){
+          
+    //             visit[j].visit = " ";
+    //         }
+    //         if(visit[j].visit == "1/2"){
+               
+    //             visit[j].visit = "1/2";
+    //         }
+    //         if(visit[j].visit == "H"){
+               
+    //             visit[j].visit = " ";
+    //         }
+    //         if(visit[j].visit == "Х"){
+               
+    //             visit[j].visit = "2";
+    //         }
+    //         j++;
+    //     //}
+    // } 
+
+
+    console.log(visit);
+
+    res.render('report', {arr : std, group : grp, month : month, visit : std_visit, visit_uv : visit});
+  });
+
+  app.post("/report", function (req, res){
+    
+    res.render('report');
+  });
   app.get("/objects", function (req, res){
     res.render('objects');
   });
@@ -264,4 +363,4 @@ app.post("/visit",urlencodedParser,function(req, res){
   app.get("/index_1", function (req, res){
     res.render('index_1');
   });
-  app.listen(3002)
+  app.listen(3001)

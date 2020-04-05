@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход</title>
+    <link rel = "stylesheet" href = "/public/css/style.css">
 
     <nav class = 'menu'>
         <ul class = "topmenu">
@@ -31,86 +32,63 @@
             <li><a href="/">Выход</a></li>
         </ul>
     </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" ></script>
+
 </head>
 <body> 
-    <input type = "text" name = "name" placeholder = "Логин" class = 'input' id = 'name' required>
+    <form method="get" action = "/report_dek">
     <div class = 'center'>
         <h1 style="color: brown;">Отчетик</h1>
         <div style="padding-bottom: 10px;">
-            <select id = "group_select">
-                <option>ИДБ-16-01</option>
-                <option>ИДБ-16-02</option>
-                <option>ИДБ-16-03</option>
-            </select>
+            <input style="text-align:center" list = "group" name = "grp" id = "grp">
+            <datalist id = "group">
+                <option value="IDB-16-01"></option>
+                <option value="IDB-16-02"></option>
+                <option value="IDB-16-03"></option>
+            </datalist>
             <br>
-            <select id = "group_select">
-                <option>Сентябрь</option>
-                <option>Октябрь</option>
-                <option>Ноябрь</option>
-                <option>Декабрь</option>
-                <option>Февраль</option>
-                <option>Март</option>
-                <option>Апрель</option>
-                <option>Май</option>
-            </select>
+            <input style="text-align:center" list = "month" name = "mnth" id = "mnth">
+            <datalist id = "month">
+                <option value="Сентябрь"></option>
+                <option value="Октябрь"></option>
+                <option value="Ноябрь"></option>
+            </datalist>
         </div>
         <div>
-            <input onclick="Report()" type = "submit" value = "Сформировать отчет" class = "button_report">
-            <button onclick="myFunction1()">
+            <input onclick="OpenPage()" type = "submit" value = "Сформировать отчет" class = "button_report">
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/pdfmake.js"></script>
-    
-    <script src="es6-promise.auto.min.js"></script>
-    <script src="jspdf.min.js"></script>
-    <script src="html2canvas.min.js"></script>
-    <script src="html2pdf.min.js"></script>
-    
-    <script>
-        function someFunc(){
-            var pdf = new jsPDF();
+</form>
 
-            name = document.getElementById("name").value;
-            pass = document.getElementById("password").value;
 
-            pdf.text(name, 20, 20);
+ 
 
-            pdf.save('test.pdf');
-        }
 
-        function Report(){
 
-            var doc = new jsPDF();
+<script>
+//     let doc  = new jsPDF();
+//    window.takeScreenShot = function () {
+//     html2canvas(document.getElementById("h11"), {
+//         onrendered: function (canvas) {
+//             document.body.appendChild(canvas);
+//             var imgData = canvas.toDataURL('image/png');
+//             //doc.addImage(canvas.toDataURL("image/jpeg"), "JPEG", 15, 40, 180, 160);
+//             doc.addImage(imgData,'PNG', 10, 10);
+//             doc.save("test.pdf");
+//         },
+//         allowTaint:true,
+//         useCORS: true,
+//         width:800,
+//         height:600
+//     });
 
-            name = document.getElementById("name").value;
-            let s = name + "";
-            doc.text(20, 20, name);
-            doc.text(20, 30, transliterate('Катя!!!'));
-            doc.addPage();
-            doc.text(20, 20, 'SAKLNDLKASFBLFBSD');
-            doc.text("Что-то на русском", 10,10, {lang:'ru'});
 
-            doc.save('Test.pdf');
-        }
 
-        //Если с английского на русский, то передаём вторым параметром true.
-        transliterate = (
-        function() {
-        var
-            rus = "щ   ш  ч  ц  ю  я  ё  ж  ъ  ы  э  а б в г д е з и й к л м н о п р с т у ф х ь".split(/ +/g),
-            eng = "shh sh ch cz yu ya yo zh `` y' e` a b v g d e z i j k l m n o p r s t u f x `".split(/ +/g)
-        ;
-        return function(text, engToRus) {
-        var x;
-        for(x = 0; x < rus.length; x++) {
-            text = text.split(engToRus ? eng[x] : rus[x]).join(engToRus ? rus[x] : eng[x]);
-            text = text.split(engToRus ? eng[x].toUpperCase() : rus[x].toUpperCase()).join(engToRus ? rus[x].toUpperCase() : eng[x].toUpperCase());	
-        }
-        return text;
-        }
-        }
-        )();
-    </script>
+    function OpenPage() {
+        win = window.open("report","Добавление студента","top=150,left=250,height=400,width=900");
+       
+    };
+</script>
 </body>
 </html>
