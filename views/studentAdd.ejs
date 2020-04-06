@@ -11,17 +11,19 @@
    
     <form method="get" action = "/studentAdd">
         <div id = "formAddSrudent">
-            <input type = "text" name = "group" placeholder = "Группа" class = 'input' >
-            <input type = "text" name = "fullname" placeholder = "Фамилия" class = 'input'>
-            <input type = "text" name = "firstname" placeholder = "Имя" class = 'input' >
-            <input type = "text" name = "lastname" placeholder = "Отчество" class = 'input' >
-            <input type = "text" id = "kod"  name = "kod" class = 'input' >
-       
-         <!-- <div id = 'knopka'> --> 
-            <input  id = "btn" type = 'submit' value = 'Сохранить' class = 'button'>
-         <!-- <input  type = 'submit' value = 'Отмена' class = 'button' style="margin-top: 25px;"> 
-        </div> -->
+            <input type = "text" id = "famill" name = "famill" placeholder = "Группа" class = 'input' required > 
+           
+            <input type = "text" id = "fullname" name = "fullname" placeholder = "Фамилия" class = 'input' required>
+            <input type = "text" id = "firstname" name = "firstname" placeholder = "Имя" class = 'input' required>
+            <input type = "text" id = "lastname" name = "lastname" placeholder = "Отчество" class = 'input' required>
+            <input type = "text" id = "kod" name = "kod" class = 'input' >
+            <input onclick="OpenDelete()" id = "btn" type = 'submit' value = 'Сохранить' class = 'button'>
     </form>
     
+    <script>
+        function OpenDelete(){
+            window.close()
+        }
+    </script>
 </body>
 </html>

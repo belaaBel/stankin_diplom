@@ -151,17 +151,75 @@ app.get("/password", function (req, res){
 });
 //==============================================================================//
   app.get("/user",urlencodedParser, (req, res) =>{
-    for(let i = 0; i < arrFullname.length; i++){
-        console.log(arrFullname[i]);
-    }
-
   res.render('user', {usss: req.body, arr: arrFullname, role : role, name : name}); //user: req.body
   });
 
-  app.get("/userDelete",urlencodedParser, (req, res) =>{
-    
 
-    res.render('userDelete', {usss: req.body, arr: arrFullname} ); //user: req.body
+
+  
+  app.get("/userAdd", function (req, res){
+    let db = new sqlite3.Database('./users.db');
+    let gr = req.query.group;
+    let fullname = req.query.fullname;
+    let firstname = req.query.name;
+    let lastname = req.query.lastname;
+    let name = fullname + " " + firstname + " " + lastname;
+    let pas = gr;
+    let role = req.query.role;
+
+    if(gr != undefined && fullname != undefined && firstname != undefined && lastname != undefined && role != undefined) {
+        let id;
+
+
+        for(let i = 0; i < arrFullname.length; i++){
+            id = i + 1;
+        }
+        id += 1;
+ 
+        let insert_sql = `INSERT INTO User VALUES (?,?,?,?,?)`;
+        
+            db.run(insert_sql, [id, gr, gr, role, name], function(err) {
+                if (err) {
+                    return console.error(err.message);
+                }
+                console.log(`Row(s) updated: ${this.changes}`);
+             });  
+        }
+
+        
+   
+    res.render('userAdd');
+  });
+
+  app.get("/userDelete",urlencodedParser, (req, res) =>{
+    res.render('userDelete', {arr: arrFullname, role : role, name : name});
+  });
+  app.post("/userDelete",urlencodedParser, (req, res) =>{
+    let db = new sqlite3.Database('./users.db');
+    let box = req.body.chr;
+    let id;
+    console.log("gtne");
+    for(let i = 0; i < arrFullname.length; i++){
+        if(box[i] != "Нет"){
+            id = i + 1;
+            let data = [id];
+            console.log(id);
+            let delete_sql = 'DELETE FROM user WHERE id = ?';
+       
+            db.run(delete_sql, [id], function(err) {
+                if (err) {
+                   return console.error(err.message);
+                }
+                console.log(`Row(s) updated: ${this.changes}`);
+               
+             });  
+        }
+        else{
+            id = i + 1;
+        }
+    } 
+
+    res.render('userDelete', {usss: req.body,arr: arrFullname, role : role, name : name});
   });
 
 //==============================================================================//
@@ -211,15 +269,32 @@ app.post("/visit",urlencodedParser,function(req, res){
   
 //==============================================================================//   
 
-
+let flag_add = 0;
   app.get("/students",urlencodedParser, (req, res) =>{
    
     res.render('students', {arr: students, role : role, name : name}); //user: req.body
   });
-
+ 
   app.post("/students",urlencodedParser,function(req, res){
     let group_std = [];
     let group = req.body.group;
+    
+    if (flag_add){
+        
+        let sql = `SELECT * FROM Students`;
+   
+        db.all(sql, [], (err, rows) => {
+            if (err){
+            throw err;
+        }
+
+        rows.forEach((row) => {
+            group_std.push(row);
+        });
+        });
+
+        flag_add = 0;
+    }
     
     for(let i = 0; i < students.length; i++){
         if(students[i].group == group){
@@ -233,69 +308,151 @@ app.post("/visit",urlencodedParser,function(req, res){
 //==============================================================================// 
 
   app.get("/studentAdd", function (req, res){
-    let group = req.query.group;
+
+    let db = new sqlite3.Database('./users.db');
+    let gr = req.query.famill;
     let kod = req.query.kod;
     let fullname = req.query.fullname;
     let firstname = req.query.firstname;
     let lastname = req.query.lastname;
     let name = fullname + " " + firstname + " " + lastname;
+
+    if(gr != undefined && fullname != undefined && kod != undefined && firstname != undefined && lastname != undefined) {
+        console.log("ddd");
+        flag = 1;
+        let id;
+        let data;
+
+        for(let i = 0; i < students.length; i++){
+            id = i + 1;
+        }
+        id += 1;
+        data = [id,gr,name,kod];
+        let insert_sql = `INSERT INTO Students VALUES (?,?,?,?)`;
+        
+            db.run(insert_sql, [id, gr, name, kod], function(err) {
+                if (err) {
+                    return console.error(err.message);
+                }
+                console.log(`Row(s) updated: ${this.changes}`);
+             });  
+        }
+
+        
    
     res.render('studentAdd', {role : role, name : name});
   });
 
   app.post("/studentAdd", function (req, res){
+
     res.render('studentAdd', {role : role, name : name});
   });
 
   //==============================================================================//
   app.get("/studentsDelete",urlencodedParser, (req, res) =>{
-
-    res.render('studentsDelete', {usss: req.body, arr: students} ); //user: req.body
+    res.render('studentsDelete', {arr:students, role : role, name : name});
   });
 
-  app.get("/userAdd", function (req, res){
-    res.render('userAdd');
+
+  app.post("/studentsDelete",urlencodedParser, (req, res) =>{
+    let box = req.body.ch;
+    let id;
+    console.log(box);
+    for(let i = 0; i < students.length; i++){
+        if(box[i] != "Нет"){
+            id = i + 1;
+            let data = [id];
+            console.log(id);
+            let delete_sql = 'DELETE FROM Students WHERE ID = ?';
+       
+            db.run(delete_sql, data, function(err) {
+                if (err) {
+                   return console.error(err.message);
+                }
+                console.log(`Row(s) updated: ${this.changes}`);
+               
+             });  
+        }
+        else{
+            id = i + 1;
+        }
+    } 
+
+    res.render('studentsDelete', {arr: students, role : role, name : name});
   });
 
-  app.get("/report_st", function (req, res){
-    res.render('report_st', {role : role, name: name});
-  });
+
+  
 
   let grp;
   let month;
 
+
+
+  app.get("/report_st", function (req, res){
+    var d = new Date();
+    let vist = [];
+let sql_visit = `SELECT * FROM Visits`;
+   
+    db.all(sql_visit, [], (err, rows) => {
+    if (err){
+      throw err;
+    }
+
+    rows.forEach((row) => {
+      vist.push(row);
+    });
+});
+
+    grp = req.query.grp;
+    month = d.getMonth() + 1;
+
+    switch(month){
+        case 4: month = "апрель";
+    }
+    month = req.query.mnth;
+    res.render('report_st', {role : role, name: name});
+  });
+
+  app.post("/report_st", function (req, res){
+   
+    res.render('report_st', {role : role, name: name});
+  });
+
+  //==============================================================================//
+  
   app.get("/report_dek", function (req, res){
+    let vist = [];
+    let sql_visit = `SELECT * FROM Visits`;
+       
+        db.all(sql_visit, [], (err, rows) => {
+        if (err){
+          throw err;
+        }
+    
+        rows.forEach((row) => {
+          vist.push(row);
+        });
+    });
     grp = req.query.grp;
     month = req.query.mnth;
     res.render('report_dek', {role : role, name : name});
   });
 
   app.post("/report_dek", function (req, res){
+    
     res.render('report_dek', {role : role, name : name});
   });
 
-  app.get("/report", function (req, res){
+ 
+  app.get("/report", function (req, res){ 
     let std = [];
    
     let std_visit = [];
     let visit = [];
-    
-
-    for(let i = 0, j = 0; i < students.length; i++){
-        
-        //if(students[i].group == grp){
-            std[j] = students[i];
-          
-            j++;
-            console.log(j);
-       // }
-    } 
-
-    
 
     for(let i = 0, j = 0; i < vist.length; i++){
-        
-        // if(vist[i].group == grp){
+        if(vist[i].group == grp){
             std_visit[j] = vist[i];
             visit[j] = vist[i];
             if(std_visit[j].visit == "+"){
@@ -306,7 +463,7 @@ app.post("/visit",urlencodedParser,function(req, res){
                 std_visit[j].visit = "1/2";
                 visit[j].visit = "1/2";
             }
-            if(std_visit[j].visit == "H"){
+            if(std_visit[j].visit == "H" || std_visit[j].visit == "H"){
                 std_visit[j].visit = "2";
                 visit[j].visit = "";
             }
@@ -315,37 +472,9 @@ app.post("/visit",urlencodedParser,function(req, res){
                visit[j].visit = "2";
             }
             j++;
-        //}
+        }
     } 
-    // for(let i = 0, j = 0; i < vist.length; i++){
-        
-    //     //if(vist[i].group == grp){
-    //         visit[j] = vist[i];
-         
-    //         if(visit[j].visit == "+"){
-          
-    //             visit[j].visit = " ";
-    //         }
-    //         if(visit[j].visit == "1/2"){
-               
-    //             visit[j].visit = "1/2";
-    //         }
-    //         if(visit[j].visit == "H"){
-               
-    //             visit[j].visit = " ";
-    //         }
-    //         if(visit[j].visit == "Х"){
-               
-    //             visit[j].visit = "2";
-    //         }
-    //         j++;
-    //     //}
-    // } 
-
-
-    console.log(visit);
-
-    res.render('report', {arr : std, group : grp, month : month, visit : std_visit, visit_uv : visit});
+    res.render('report', {group : grp, month : month, visit : std_visit, visit_uv : visit});
   });
 
   app.post("/report", function (req, res){

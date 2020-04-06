@@ -54,6 +54,7 @@ let doc  = new jsPDF();
                 <th style = "border: solid 1px; border-collapse: collapse; width: 100px;">Пропущено занятий по уважительной причине</th>
             </tr>
             <% visit.forEach((item) =>{ %>
+                
             <tr style = " border: solid 1px; border-collapse: collapse;">
                 <td style = "border: solid 1px; border-collapse: collapse;"><%= item.id %></td>
                 <td style = "border: solid 1px; border-collapse: collapse;"><%= item.student  %></td>
@@ -63,6 +64,7 @@ let doc  = new jsPDF();
                         <td style = "text-align:center; border: solid 1px; border-collapse: collapse;"><%= vis.visit %></td>
                     <% } %>
                 <% }); %>
+               
             <% }); %>
             </tr>
         </table>

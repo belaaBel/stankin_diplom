@@ -7,6 +7,8 @@
     <link rel = "stylesheet" href = "/public/css/style.css">
 </head>
 <body> 
+    <form method="post" action = "/user"></form>
+   
     <table class = 'table'>
         <tr>
             <th>№</th>
@@ -17,11 +19,11 @@
         
         <% arr.forEach((item) =>{ %>
        <tr>
-           <td><%= item.id+1 %></td>
+           <td><%= item.id %></td>
            <td><%= item.fullname  %></td>
            <td><%= item.login  %></td>
-           <td class = "checkbox">
-               <input type = "checkbox">
+           <td>
+                <input type = "checkbox" id = "checkbox" name = "chr" value="Нет" checked>
            </td>
        <% }); %>
        </tr>
@@ -31,13 +33,12 @@
 
     <div class = 'knopka'>
         <input onclick = "OpenDelete()" type = 'submit' value = 'Удалить' class = 'button' style="margin-right: 50px; margin-top: 25px;">
-        <input onclick = "OpenDelete()" type = 'submit' value = 'Отмена' class = 'button' style="margin-top: 25px;">
     </div>
-
+</form>
     <script>
-        function OpenDelete(){
-            window.close()
-        }
+        // function OpenDelete(){
+        //     window.close()
+        // }
     </script>
 </body>
 </html>

@@ -35,6 +35,7 @@
 </head>
 <body> 
     <br>
+    <form name = "form" method="get" action = "/user"></form>
     <table class = 'table'>
         <tr>
             <th>№</th>
@@ -57,14 +58,14 @@
         <input onclick = "OpenAdd()" type = 'submit' value = 'Добавить' class = 'button' style="margin-right: 50px; margin-top: 25px;">
         <input onclick = "OpenDelete()" type = 'submit' value = 'Удалить' class = 'button' style="margin-top: 25px;">
     </div>
-
+</form>
     <script>
         function OpenAdd(){
             win = window.open("userAdd", "Добавить студента", "top=150,left=250,height=500,width=900");
         }
 
         function OpenDelete(){
-            win = window.open("userDelete", "Удаление студентов", "top=150,left=250,height=200,width=900");
+            win = window.open("userDelete", "Удаление студентов", "top=150,left=250,height=900,width=900");
         }
     </script>
 </body>
