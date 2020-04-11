@@ -96,9 +96,9 @@ app.post("/password",urlencodedParser,function(req, res){
     password_new_replay = req.body.password_new_replay;
     
     arrFullname.forEach(function(item){
-        if(item.id == 0){
-            id = item.id;   
-        }
+        // if(item.id == 0){
+            id = item.id - 1;   
+        // }
     });
 
    
@@ -243,23 +243,32 @@ app.post("/visit",urlencodedParser,function(req, res){
     let subject = req.body.subject;
     let id;
     let data = [];
+let students_2 = [];
+    for(let j = 0; j < arrFullname.length; j++){
+        if (login == arrFullname[j].login){
+            for(let i = 0, jj = 0; i < students.length; i++){
+                students_2[jj] = students[i];
+                jj++;
+    }
 
-    for(let i = 0; i < students.length; i++){
-        data[i] = [day, subject, visit[i]];
-        id = i+1;
+        }
+}
+for(let i = 0; i < students_2.length; i++){
+    data[i] = [day, subject, visit[i]];
+    id = i+1;
 
-        let update_sql = 'UPDATE Visits SET day = ?, subject = ?, visit = ? WHERE id = '+ id;
-       
-        db.run(update_sql, data[i], function(err) {
-            if (err) {
-               return console.error(err.message);
-            }
-            console.log(`Row(s) updated: ${this.changes}`);
-           
-         });  
-    } 
+    let update_sql = 'UPDATE Visits SET day = ?, subject = ?, visit = ? WHERE id = '+ id;
 
-    res.render('visit', {arr: students, role : role, name: name} ); 
+    db.run(update_sql, data[i], function(err) {
+        if (err) {
+        return console.error(err.message);
+        }
+        console.log(`Row(s) updated: ${this.changes}`);
+    
+    });  
+} 
+
+    res.render('visit', {arr: students_2, role : role, name: name} ); 
   });
 
   app.get("/visit",urlencodedParser, (req, res) =>{
@@ -271,7 +280,6 @@ app.post("/visit",urlencodedParser,function(req, res){
 
 let flag_add = 0;
   app.get("/students",urlencodedParser, (req, res) =>{
-   
     res.render('students', {arr: students, role : role, name : name}); //user: req.body
   });
  
@@ -482,11 +490,45 @@ let sql_visit = `SELECT * FROM Visits`;
     res.render('report');
   });
   app.get("/objects", function (req, res){
-    res.render('objects');
+    let route = req.query.route;
+    let course = req.query.course;
+    let semester = req.query.semester;
+    let sub = req.query.sub;
+    
+    let insert_teach = `INSERT INTO Subject (route, course, semester, subject) VALUES (?,?,?,?)`;
+        
+    db.run(insert_teach, [route, course, semester, sub], function(err) {
+        if (err) {
+            return console.error(err.message);
+        }
+            console.log(`Row(s) updated: ${this.changes}`);
+        });  
+    res.render('objects', {role : role, name : name});
   });
 
   app.get("/teachers", function (req, res){
+    let department = req.query.department;
+    let sub = req.query.sub;
+    let fio = req.query.name;
+    let id;
+    let teach = [];
+   
+    
+    let insert_teach = `INSERT INTO Teachers (department, fullname_teachers, subject) VALUES (?,?,?)`;
+        
+    db.run(insert_teach, [department, fio, sub], function(err) {
+        if (err) {
+            return console.error(err.message);
+        }
+            console.log(`Row(s) updated: ${this.changes}`);
+        });  
+        
     res.render('teachers', {role : role, name : name});
+  });
+
+  app.post("/teachers", function (req, res){
+    
+    res.render('teachers', { role : role, name : name});
   });
 
   app.get("/index_1", function (req, res){

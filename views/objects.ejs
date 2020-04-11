@@ -5,42 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход</title>
     <link rel = "stylesheet" href = "/public/css/style.css">
+    <nav class = 'menu'>
+        <ul class = "topmenu">
+            <li><a href="#">Мои действия</a>
+                <ul class = "submenu">
+                    
+                   <% if(role == "староста") { %>
+                        <li><a href="/visit">Журнал посещений студентов</a></li>
+                        <li><a href='/report_st'>Отчет</a></li>
+                        <li><a href="/password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } else if(role == "сотрудник деканата"){ %>
+                        <li><a href="/report_dek">Отчет</a></li>
+                        <li><a href="/students">Студенты</a></li>
+                        <li><a href="/password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } else{ %>
+                        <li><a href="/user">Пользователи</a></li>
+                        <li><a href="/password">Сменить пароль</a></li>
+                        <li><a href="/">Выход</a></li>
+                    <% } %>
+                </ul>
+            </li>
+            <li style = "font-weight: bold; color: white"><%= role %> <%= name %></li>
+            <li><a href="/">Выход</a></li>
+        </ul>
+    </nav>
+   
 </head>
 <body> 
-    <form class = 'form' method="POST" action = "/">
+    <form class = 'form' method="get" action = "/objects">
         <div class = 'fon'>
-            <label class = 'label'>Добавьте предмет</label>
-            <div>
-                <input class = 'object' type = "text" placeholder = "Предмет" required value="Современные средства и технологии разработки программных средств">
-            </div>
-            <div>
-                <select id = "group_select">
-                    <option>Бакалавр</option>
-                    <option>Магистр</option>
-                    <option>Аспирант</option>
-                </select>
-                <br>
-                <select id = "group_select">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                </select>
-                <br>
-                <select id = "group_select">
-                    <option>1</option>
-                    <option>2</option>
-                </select>
-                <br>
-                <select id = "group_select">
-                    <option>09.03.01</option>
-                    <option>09.03.02</option>
-                </select>
-            </div>
-            <div>
-                <input type = "submit" value = "Сохранить" class = "button">
-                <input type = "reset" value = "Отменить" class = "button">
-            </div>
+            <label class = 'label'>Преподаватель</label>
+  
+            <input style="text-align:center" list = "route" name = "route" id = "rou">
+
+            <datalist id = "route">
+                <option value="09.03.01"></option>
+            </datalist>
+
+            <input style="text-align:center" list = "course" name = "course" id = "cou">
+
+            <datalist id = "course">
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+            </datalist>
+
+            <input style="text-align:center" list = "semester" name = "semester" id = "sem">
+
+            <datalist id = "semester">
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+                <option value="6"></option>
+                <option value="7"></option>
+                <option value="8"></option>
+                <option value="9"></option>
+                <option value="10"></option>
+            </datalist>
+            <input name = "sub" class = 'object' type = "text" placeholder = "Предмет" required>
+           
+            <input type = "submit" value = "Сохранить" class = "button">
+            <input type = "reset" value = "Отменить" class = "button">
         </div>
     </form>
 </body>

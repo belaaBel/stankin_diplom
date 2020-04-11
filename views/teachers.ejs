@@ -34,30 +34,22 @@
    
 </head>
 <body> 
-    <form class = 'form' method="POST" action = "/">
+    <form class = 'form' method="get" action = "/teachers">
         <div class = 'fon'>
             <label class = 'label'>Преподаватель</label>
-            <div>
-                <select id = "group_select">
-                    <option>Название кафедры</option>
-                    <option>Название кафедры</option>
-                    <option>Название кафедры</option>
-                </select>
-                <br>
-                <select id = "group_select">
-                    <option>предмет</option>
-                    <option>предмет</option>
-                    <option>предмет</option>
-                    <option>предмет</option>
-                </select>
-            </div>
-            <div>
-                <input class = 'object' type = "text" placeholder = "фио" required value="Гипермедийные среды и технологии">
-            </div>
-            <div>
-                <input type = "submit" value = "Сохранить" class = "button">
-                <input type = "reset" value = "Отменить" class = "button">
-            </div>
+  
+            <input style="text-align:center" list = "department" name = "department" id = "dep">
+
+            <datalist id = "department">
+                <option value="Информационные технологии и вычислительные системы"></option>
+            </datalist>
+
+            <input name = "sub" class = 'object' type = "text" placeholder = "Предмет" required>
+          
+            <input name = "name" class = 'object' type = "text" placeholder = "Фамилия Имя Отчество" required>
+           
+            <input type = "submit" value = "Сохранить" class = "button">
+            <input type = "reset" value = "Отменить" class = "button">
         </div>
     </form>
 </body>
